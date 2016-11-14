@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-require('../db');
+require('./db');
 
 var app = express();
 //允许跨域
