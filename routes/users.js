@@ -5,7 +5,7 @@ var router = express.Router();
 /*注册接口*/
 router.post('/reg', function(req, res, next) {
   var user = req.body;
-  if(user.username!=undefined) {
+  if(user.username==undefined||user.username=='') {
     return res.send({err:1,msg:'用户不能为空'});
   }
   if(user.password!=user.repassword) {
