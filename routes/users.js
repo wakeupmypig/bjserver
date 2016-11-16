@@ -43,4 +43,35 @@ router.post('/info', function(req, res, next) {
     res.send({err:1,msg:'登录失败'});
   });
 });
+/*修改邮箱*/
+router.post('/info', function(req, res, next) {
+  var user = req.body;
+  var _id = req.session.user._id;
+
+  Model('User').update({_id},{$set:user}).then(function (data) {
+    res.send(user);
+  }).catch(function (err) {
+    res.send({err:1,msg:'登录失败'});
+  });
+});
+/*修改密码*/
+router.post('/pass', function(req, res, next) {
+  var user = req.body;
+  user.oldPassword = crypto.createHash('md5').update(user.oldPassword.toString()).digest('hex');
+  var _id = req.session.user._id;
+  Model('User').findOne({_id,password:user.oldPassword}).then(function (data) {
+    if(data){
+      user.newPassword = crypto.createHash('md5').update(user.newPassword.toString()).digest('hex');
+      Model('User').update({_id},{password:user.newPassword}).then(function (data) {
+        res.send({err:0,msg:'修改成功'});
+      }).catch(function (err) {
+        res.send({err:1,msg:'修改失败'});
+      });
+    }else{
+      res.send({err:1,msg:'修改失败'});
+    }
+  }).catch(function (err) {
+    res.send({err:1,msg:'修改失败'});
+  });
+});
 module.exports = router;
