@@ -4,7 +4,13 @@ mongoose.Promise = Promise;
 var UserSchema = new mongoose.Schema({
     username:String,
     password:String,
-
+    nickName:{default:'',type:String},
+    realName:String,
+    gender:{type:Number,default:1},
+    birthday:Number,
+    email:String,
+    tel:Number,
+    avatar:String,
 });
 mongoose.model('User',UserSchema);
 

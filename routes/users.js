@@ -33,4 +33,14 @@ router.post('/login', function(req, res, next) {
       res.send({err:1,msg:'登录失败'});
   });
 });
+/*修改资料*/
+router.post('/info', function(req, res, next) {
+  var user = req.body;
+  var _id = req.session.user._id;
+  Model('User').update({_id},{$set:user}).then(function (data) {
+    res.send(user);
+  }).catch(function (err) {
+    res.send({err:1,msg:'登录失败'});
+  });
+});
 module.exports = router;
